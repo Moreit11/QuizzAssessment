@@ -28,14 +28,18 @@ body{
 
     }
 
-        input{
+        input   {
             padding: 0.3em;
             font-size: 1.1em;
             font-weight: 500;
             text-align: start;
-
-
-    }
+        }
+        .wrong  {
+            color: red;
+        }
+        .right  {
+            color: green;
+        }
 
     .score  {
         padding: .5em;

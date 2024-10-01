@@ -5,33 +5,36 @@ let questions = [
 ];
 
 let answers = [
-    "A1: Edinburgh",
-    "A2: Dublin",
-    "A3: Lima"
+    "Edinburgh",
+    "Dublin",
+    "Lima"
 ]
 
 function setQuestions() {
     for(var i=0; i < questions.length; i++)   {
-        document.getElementById("q"+i).textContent = questions[i];
+        document.getElementById("q"+i).textContent = questions[i]
     }
 }
 
-
-
 function checkAnswers() {
 
-    console.log('answer check intiated')
+    let allAnsVal = Array.from(document.querySelectorAll('input')).map(input => input.value); // get a node list for all answers and convert it into an array
+    let results = [] //Declare empty array to store results
+    let score = 0
 
-    let allAnsNode = Array.from(document.querySelectorAll('input')); // get a node list for all answers and convert it into an array
+    for ( let i = 0; i < allAnsVal.length ; i++ )  {
+        results[i] = allAnsVal[i].toLowerCase() === answers[i].toLowerCase() 
 
-    let allAnsVal = allAnsNode.map(input => input.value); // map the values of the input fields into an array
-
-    console.log(allAnsNode);
-    console.log(allAnsVal);
-
-    for ( let i=1; i<allAnsVal.length ; i++ )  {
-       let check[i] = allAnsVal[i].toLowerCase === answers[i] ;
-       console.log(check);
+        if(results[i]) {
+            score ++
+            document.getElementById('q'+i).classList.add('right')
+            document.getElementById('aq'+i).classList.add('right')
+            
+        }
+            else {
+                document.getElementById('q'+i).classList.add('wrong')
+                document.getElementById('aq'+i).classList.add('wrong')
+            }
     }
-    
+    document.getElementById('score').textContent = 'Your Score is ' + score
 }
