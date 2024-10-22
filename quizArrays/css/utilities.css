@@ -11,10 +11,10 @@
  --light-transparent: hsl(45, 29%, 97%, .2); 
  --accent-transparent: hsl(10, 75%, 40%, .5);
  --container-width: 1140px;
- --spacing--l: calc(5vh + 5vw);
- --spacing--m: calc(3vh + 3vw);
- --spacing--s: calc(1.5vh + 1.5vw);
- --spacing--xs: calc(.5vh + .5vw);
+ --spacing--l: calc(2vh + 2vw);
+ --spacing--m: calc(1.5vh + 1.5vw);
+ --spacing--s: calc(.4vh + 04vw);
+ --spacing--xs: calc(.1vh + .1vw);
  --txt-shadow:  0 0 15px black;
 }
 

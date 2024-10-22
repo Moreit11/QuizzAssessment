@@ -1,0 +1,33 @@
+.quiz  {/*container class*/
+    align-items: start;
+    gap: var(--spacing--s)
+}
+
+    .quiz__fgroup{
+        padding: var(--spacing--s);
+        align-items: stretch;
+    }
+        .quiz__label   {
+            font-size: 1.2em;
+            font-weight: 200;
+        }
+        
+        .quiz__answ-wrap   {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing--xs)
+        }
+            
+            .quiz__answ {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing--xs);
+            }
+
+            .quiz__answ:focus-within {
+                outline: 3px   solid var(--brand-accent); /* Custom focus targeting focusing all elements inside label*/
+            }
+
+                .quiz__answ-wrap input:focus {
+                    outline: none; /* remove focus outline from input checkbox */
+                }     
