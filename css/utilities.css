@@ -1,8 +1,8 @@
-*{
+/* *{
     padding:0;
     margin:0;
     box-sizing: border-box;
-}
+} */
 :root{
  --brand-white: hsl(45, 29%, 97%); 
  --brand-black: hsl(0 , 0% , 19%);
@@ -58,6 +58,9 @@ section:has(.container) {
 
     transition: .4s;
 }
+a.button {
+    color: inherit;
+}
 .button:hover{
     box-shadow: 7px 7px 0 var(--dark-transparent);
 }
@@ -66,11 +69,11 @@ section:has(.container) {
         background: var(--brand-white);
         color: var(--brand-accent);
     }
-.button-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-}
+    .button-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+    }
 
 /*position img elements absolute as a pseudo element
 Use this class on the parent element*/

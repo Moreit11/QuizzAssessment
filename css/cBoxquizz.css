@@ -7,10 +7,6 @@
         padding: var(--spacing--s);
         align-items: stretch;
     }
-    .quiz__fgroup{
-        padding: var(--spacing--s);
-        align-items: stretch;
-    }
         .quiz__label   {
             font-size: 1.2em;
             font-weight: 200;

@@ -1,5 +1,4 @@
 body{
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     color: var(--brand-black);
 }
 
@@ -11,6 +10,10 @@ body{
     gap: var(--spacing--xs);
 
 }
+    .container--welcome {
+        flex-direction: column;
+        gap: 5rem;
+    }
 
 .row{
     display: flex;
@@ -24,8 +27,6 @@ body{
         justify-content: center;
         font-weight: 600;
         font-size: 1.1em;
-
-
     }
 
         input   {
@@ -49,7 +50,4 @@ body{
         color: var(--brand-white);
         font-weight: 600;
     }
-.button {
-    margin:  1em 0 .5em 0;
-}
 
