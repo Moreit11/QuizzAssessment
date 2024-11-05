@@ -87,12 +87,11 @@ function loadQuestion() {
 function displayQuestionContent(question) {
   // Display the question text
   document.getElementById('question-label').innerText = question.question;
-
+  console.log(question.options.length)
   for (let i = 0; i < question.options.length; i++) {
-    const optionElement = document.getElementById(`option-${i + 1}`);
-    if (optionElement) {
-        optionElement.innerText = question.options[i]; // Set the correct option text
-    }
+    document.getElementById('option-' + i).value = question.options[i];
+    console.log(question.options[i]);
+
 }
 //   // Select all input elements for options (assuming they are checkboxes)
 //   const answerOptions = document.querySelectorAll('.question-option input');
