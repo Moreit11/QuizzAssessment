@@ -55,18 +55,11 @@ let qTypeIndex = 0;
 const qTypeArray = [questSing, questMult, questOpen];
 let qType = qTypeArray[qTypeIndex];
 
-// function getNextArray() {
-//   arrayIndex++; 
-//   if (arrayIndex <= qTypeArray.length) { 
-//     qType = qTypeArray[arrayIndex]; 
-//     currentIndex = 0; 
-//     return true; 
-//   }
-//     return false; }
-
 function loadQuestion() {
   // fetching template for each question
+  console.log(qTypeIndex)
   let tempPath 
+  
   if (qType === questSing) {
     tempPath = 'QuestionTemplates/singleChoice.html'
 
@@ -120,12 +113,13 @@ function validateInput() {
     }
   } else if (qType === questMult) {
     // For multiple-choice questions
-    let selectedOption = document.querySelectorAll('input[name="option"]:checked');
-    if (selectedOption){
-      console.log('Multiple coice option has been selected')
 
+    let selectedOptions = document.querySelectorAll('input[name="option"]:checked');
+    if (selectedOptions.length > 0){
+      console.log('Multiple coice option has been validated')
+      
     } else {
-
+      console.log('Multiple choice validation failed')
       return false
     }
   } else if (qType === questOpen) {
@@ -153,12 +147,13 @@ function storeInput () {
   if (qType === questSing) {
     // For single-choice questions
     let userInput = document.querySelector('input[name="option"]:checked').value;
-    localStorage.setItem(`question-${qIndex}`, userInput);
+    localStorage.setItem(`${qTypeIndex}question-${qIndex}`, userInput);
   
 
   }else if (qType === questMult) {
-    let userInput = document.querySelectorAll('input[name="option"]:checked').value;
-    
+    let selectedOptions = document.querySelectorAll('input[name="option"]:checked'); 
+    let userInput = Array.from(selectedOptions).map(option => option.value); // Convert NodeList to array of values 
+    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); // Stringify the array
   } else if (qType === questOpen) {
     
   } else {
@@ -171,14 +166,15 @@ function showNextQuestion() {
   
   
     if(qIndex < qType.length -1 )  { // check where we are in the current array
-      console.log('next question called - current question: ' + qIndex)
       qIndex++;
       loadQuestion();
-  }else if ( qIndex = qType.length - 1 ){ // runs if the current array is completed
-    loadQuestion();
+  }else if ( qIndex === qType.length - 1 ){ // runs if the current array is completed
+    
     console.log('Move to next question type');
     qTypeIndex++;
     qIndex = 0;
+    qType = qTypeArray[qTypeIndex];
+    loadQuestion();
   }
   else {
     console.log('quizz has been completed')
