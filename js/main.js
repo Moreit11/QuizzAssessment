@@ -49,3 +49,123 @@ let questOpen = [
   }
 ];
 
+
+let currentArray = questSing ; 
+let currentIndex = 0 ;
+
+
+function loadQuestion() {
+  // fetching template for each question
+  let tempPath 
+  if (currentArray === questSing) {
+    tempPath = 'QuestionTemplates/singleChoice.html'
+
+  } else if (currentArray === questMult) {
+    tempPath = 'QuestionTemplates/multipleChoice.html'
+
+  } else if(currentArray === questOpen){ 
+    tempPath = 'QuestionTemplates/openChoice.html'
+
+  } else {
+    console.log('Question template not defined')
+
+  }
+  /*RETRIEVE APPROPRIATE QUESTION TEMPLATE*/
+  fetch(tempPath) 
+    .then (response => response.text())
+    .then (html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html")
+      const questionContent = doc.body.innerHTML
+
+      document.getElementById('question-container').innerHTML = questionContent
+
+        displayQuestionContent(currentArray[currentIndex])
+    })
+}
+
+function displayQuestionContent(question) {
+  // Display the question text
+  document.getElementById('question-label').innerText = question.question;
+
+  for (let i = 0; i < question.options.length; i++) {
+    const optionElement = document.getElementById(`option-${i + 1}`);
+    if (optionElement) {
+        optionElement.innerText = question.options[i]; // Set the correct option text
+    }
+}
+//   // Select all input elements for options (assuming they are checkboxes)
+//   const answerOptions = document.querySelectorAll('.question-option input');
+
+//   if (question.options) {
+//     question.options.forEach((option,index) => {
+//       const optionElement = document.getElementById(`option-${index + 1}`);
+//       if (optionElement) optionElement.innerText = option;
+//     })
+//   }
+
+//   console.log(answerOptions);
+}
+
+
+
+
+
+
+
+//   fetch(templatePath)
+//     .then(response => response.text())
+//     .then(html => {
+//       const parser = new DOMParser();
+//       const doc = parser.parseFromString(html, "text/html");
+//       const questionContent = doc.body.innerHTML;
+      
+//       document.getElementById('question-container').innerHTML = questionContent;
+
+//       // Display question content
+//       displayQuestionContent(currentArray[currentIndex]);
+//     })
+//     .catch(error => console.error("Error loading template:", error));
+// }
+
+// /**/
+// function displayQuestionContent(question) {
+//   document.getElementById('question-text').innerText = question.question;
+
+//   if (question.options) {
+//     question.options.forEach((option, index) => {
+//       const optionElement = document.getElementById(`option-${index + 1}`);
+//       if (optionElement) optionElement.innerText = option;
+//     });
+//   }
+// }
+
+
+// /*
+// function nextQuestion() {
+//   currentIndex++;
+
+//   if (currentIndex >= currentArray.length) {
+//     // Move to the next array
+//     if (currentArray === questSing) {
+//       currentArray = questMult;
+//     } else if (currentArray === questMult) {
+//       currentArray = questOpen;
+//     } else {
+//       // End the quiz if no more arrays
+//       endQuiz();
+//       return;
+//     }
+    
+//     // Reset index for the new array
+//     currentIndex = 0;
+//   }
+
+//   // Load the next question
+//   loadQuestion();
+// }
+
+// function endQuiz() {
+//   console.log("Quiz completed!");
+//   // Show final score or summary here
+// }

@@ -1,0 +1,8 @@
+Min requirements
+1. quizz needs to scale dynamically based on the 3 questions types
+2. Qestions need to have a next button.
+3. 
+
+Enhancements
+1. user can navigate back and forth.
+2. User can change existing answers - display & change local storage

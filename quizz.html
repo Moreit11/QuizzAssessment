@@ -6,19 +6,23 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/utilities.css">
     <link rel="stylesheet" href="/css/cBoxquizz.css">
-    <script src="/js/main.js"></script>
+
 </head>
-<body onload="getQuestions()">
+<body onload="loadQuestion()">
 
     <section>
-        <div id="quizz-container" class="container quiz">
+        <div id="question-container" class="container quiz">
         
 
             
         </div>
         <div class="btn-wrap btn-wrap--question">
-            <button>Next question</button>
+            <!-- <button class="btn btn--prv">Previous question</button> -->
+            <button id="nxt-btn" class="btn btn--nxt">Next question</button>
         </div>
     </section>
+
+<!-- SCRIPTS -->
+<script src="/js/main.js" defer></script>
 </body>
 </html>

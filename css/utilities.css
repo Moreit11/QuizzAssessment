@@ -44,7 +44,7 @@ section:has(.container) {
 
 /* Button styles */
 
-.button {
+.button, .btn {
     font-weight: 700;
     text-transform: uppercase;
     padding: 0.7rem 1.7rem;
@@ -61,7 +61,7 @@ section:has(.container) {
 a.button {
     color: inherit;
 }
-.button:hover{
+.button:hover, .btn:hover{
     box-shadow: 7px 7px 0 var(--dark-transparent);
 }
     .button--red    {
@@ -73,6 +73,7 @@ a.button {
         width: 100%;
         display: flex;
         justify-content: end;
+        gap: var(--spacing--xs);
     }
 
 /*position img elements absolute as a pseudo element
