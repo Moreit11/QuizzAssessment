@@ -50,30 +50,30 @@ let questOpen = [
 ];
 
 
-let currentArray = questSing ; 
-let currentIndex = 0 ;
-let arrayIndex = 0;
-const questionArrays = [questSing, questMult, questOpen];
+let qIndex = 0 ;
+let qTypeIndex = 0;
+const qTypeArray = [questSing, questMult, questOpen];
+let qType = qTypeArray[qTypeIndex];
 
-function getNextArray() {
-  arrayIndex++; 
-  if (arrayIndex < questionArrays.length) { 
-    currentArray = questionArrays[arrayIndex]; 
-    currentIndex = 0; 
-    return true; 
-  } 
-    return false; }
+// function getNextArray() {
+//   arrayIndex++; 
+//   if (arrayIndex <= qTypeArray.length) { 
+//     qType = qTypeArray[arrayIndex]; 
+//     currentIndex = 0; 
+//     return true; 
+//   }
+//     return false; }
 
 function loadQuestion() {
   // fetching template for each question
   let tempPath 
-  if (currentArray === questSing) {
+  if (qType === questSing) {
     tempPath = 'QuestionTemplates/singleChoice.html'
 
-  } else if (currentArray === questMult) {
+  } else if (qType === questMult) {
     tempPath = 'QuestionTemplates/multipleChoice.html'
 
-  } else if(currentArray === questOpen){ 
+  } else if(qType === questOpen){ 
     tempPath = 'QuestionTemplates/openChoice.html'
 
   } else {
@@ -88,18 +88,18 @@ function loadQuestion() {
       const doc = parser.parseFromString(html, "text/html")
       const questionContent = doc.body.innerHTML
 
-      document.getElementById('question-container').innerHTML = questionContent
+      document.getElementById('question-container').innerHTML = questionContent;
 
-        displayQuestionContent(currentArray[currentIndex])
+        displayQuestionContent(qType[qIndex]);
     })
 }
 
-function displayQuestionContent(question) {
+function displayQuestionContent(currentItem) {
   // Display the question text
-  document.getElementById('question-label').innerText = question.question;
-  for (let i = 0; i < question.options.length; i++) {
-    document.getElementById('option-' + i).value = question.options[i];
-    document.getElementById('option-text-' + i).textContent = question.options[i];
+  document.getElementById('question-label').innerText = currentItem.question;
+  for (let i = 0; i < currentItem.options.length; i++) {
+    document.getElementById('option-' + i).value = currentItem.options[i];
+    document.getElementById('option-text-' + i).textContent = currentItem.options[i];
   }
 }
 
@@ -107,28 +107,28 @@ function displayQuestionContent(question) {
 
 
 function validateInput() {
-  console.log('validation initiated')
-  if (currentArray === questSing) {
+
+  if (qType === questSing) {
     // For single-choice questions
     let selectedOption = document.querySelector('input[name="option"]:checked');
     if (selectedOption){
-      console.log(' Single coice option has been selected')
+
       
     } else {
-      console.log('Single choice option has not been selected')
+
       return false;
     }
-  } else if (currentArray === questMult) {
+  } else if (qType === questMult) {
     // For multiple-choice questions
     let selectedOption = document.querySelectorAll('input[name="option"]:checked');
     if (selectedOption){
       console.log('Multiple coice option has been selected')
 
     } else {
-      console.log('Single choice option has not been selected')
+
       return false
     }
-  } else if (currentArray === questOpen) {
+  } else if (qType === questOpen) {
     // For open questions
     const answerInput = document.querySelector('input[name="open-answer"]').value.trim();
     if(answerInput.length > 0) { 
@@ -137,10 +137,10 @@ function validateInput() {
       return false
     }
   } else {
-    console.log('Question type not defined');
+
     return false;
   }
-console.log('validation complete')
+
 storeInput();
 }
 
@@ -148,35 +148,40 @@ storeInput();
 
 function storeInput () {
   //create and object in Java script with the input passed from the form
-  console.log('storing input initiated')
 
-  if (currentArray === questSing) {
+
+  if (qType === questSing) {
     // For single-choice questions
     let userInput = document.querySelector('input[name="option"]:checked').value;
-    localStorage.setItem(`question-${currentIndex}`, userInput);
-    console.log('input has been stored in the browser')
+    localStorage.setItem(`question-${qIndex}`, userInput);
+  
 
-  }else if (currentArray === questMult) {
+  }else if (qType === questMult) {
     let userInput = document.querySelectorAll('input[name="option"]:checked').value;
     
-  } else if (currentArray === questOpen) {
+  } else if (qType === questOpen) {
     
   } else {
-    console.log('Question type not defined');
+    
   }
   showNextQuestion();
 }
   
 function showNextQuestion() {
   
-  console.log('next question called')
-    if(currentIndex < currentArray.length)  {
-      currentIndex++;
+  
+    if(qIndex < qType.length -1 )  { // check where we are in the current array
+      console.log('next question called - current question: ' + qIndex)
+      qIndex++;
       loadQuestion();
-  }else if (getNextArray()){
+  }else if ( qIndex = qType.length - 1 ){ // runs if the current array is completed
     loadQuestion();
+    console.log('Move to next question type');
+    qTypeIndex++;
+    qIndex = 0;
   }
   else {
     console.log('quizz has been completed')
+
   }
 }
