@@ -87,74 +87,83 @@ function loadQuestion() {
 function displayQuestionContent(question) {
   // Display the question text
   document.getElementById('question-label').innerText = question.question;
-  console.log(question.options.length)
   for (let i = 0; i < question.options.length; i++) {
     document.getElementById('option-' + i).value = question.options[i];
-    document.getElementById('option-text-' + i).textContent = question.options[i]; 
-    console.log(question.options[i]);
-
+    document.getElementById('option-text-' + i).textContent = question.options[i];
   }
 }
 
 
 
 
-
-
-
-//   fetch(templatePath)
-//     .then(response => response.text())
-//     .then(html => {
-//       const parser = new DOMParser();
-//       const doc = parser.parseFromString(html, "text/html");
-//       const questionContent = doc.body.innerHTML;
+function validateInput() {
+  console.log('validation initiated')
+  if (currentArray === questSing) {
+    // For single-choice questions
+    let selectedOption = document.querySelector('input[name="option"]:checked');
+    if (selectedOption){
+      console.log(' Single coice option has been selected')
       
-//       document.getElementById('question-container').innerHTML = questionContent;
+    } else {
+      console.log('Single choice option has not been selected')
+      return false;
+    }
+  } else if (currentArray === questMult) {
+    // For multiple-choice questions
+    let selectedOption = document.querySelectorAll('input[name="option"]:checked');
+    if (selectedOption){
+      console.log('Multiple coice option has been selected')
 
-//       // Display question content
-//       displayQuestionContent(currentArray[currentIndex]);
-//     })
-//     .catch(error => console.error("Error loading template:", error));
-// }
+    } else {
+      console.log('Single choice option has not been selected')
+      return false
+    }
+  } else if (currentArray === questOpen) {
+    // For open questions
+    const answerInput = document.querySelector('input[name="open-answer"]').value.trim();
+    if(answerInput.length > 0) { 
 
-// /**/
-// function displayQuestionContent(question) {
-//   document.getElementById('question-text').innerText = question.question;
+    } else if (answerInput.length <= 0) {
+      return false
+    }
+  } else {
+    console.log('Question type not defined');
+    return false;
+  }
+console.log('validation complete')
+storeInput();
+}
 
-//   if (question.options) {
-//     question.options.forEach((option, index) => {
-//       const optionElement = document.getElementById(`option-${index + 1}`);
-//       if (optionElement) optionElement.innerText = option;
-//     });
-//   }
-// }
 
 
-// /*
-// function nextQuestion() {
-//   currentIndex++;
+function storeInput () {
+  //create and object in Java script with the input passed from the form
+  console.log('storing input initiated')
 
-//   if (currentIndex >= currentArray.length) {
-//     // Move to the next array
-//     if (currentArray === questSing) {
-//       currentArray = questMult;
-//     } else if (currentArray === questMult) {
-//       currentArray = questOpen;
-//     } else {
-//       // End the quiz if no more arrays
-//       endQuiz();
-//       return;
-//     }
+  if (currentArray === questSing) {
+    // For single-choice questions
+    let userInput = document.querySelector('input[name="option"]:checked').value;
+    localStorage.setItem(`question-${currentIndex}`, userInput);
+    console.log('input has been stored in the browser')
+
+  }else if (currentArray === questMult) {
+    let userInput = document.querySelectorAll('input[name="option"]:checked').value;
     
-//     // Reset index for the new array
-//     currentIndex = 0;
-//   }
-
-//   // Load the next question
-//   loadQuestion();
-// }
-
-// function endQuiz() {
-//   console.log("Quiz completed!");
-//   // Show final score or summary here
-// }
+  } else if (currentArray === questOpen) {
+    
+  } else {
+    console.log('Question type not defined');
+  }
+  showNextQuestion();
+}
+  
+function showNextQuestion() {
+  currentIndex++;
+  console.log('next question called')
+  if(currentIndex < currentArray.length)  {
+    loadQuestion();
+  }
+  else {
+    console.log('quizz has been completed')
+  }
+}
