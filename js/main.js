@@ -90,20 +90,10 @@ function displayQuestionContent(question) {
   console.log(question.options.length)
   for (let i = 0; i < question.options.length; i++) {
     document.getElementById('option-' + i).value = question.options[i];
+    document.getElementById('option-text-' + i).textContent = question.options[i]; 
     console.log(question.options[i]);
 
-}
-//   // Select all input elements for options (assuming they are checkboxes)
-//   const answerOptions = document.querySelectorAll('.question-option input');
-
-//   if (question.options) {
-//     question.options.forEach((option,index) => {
-//       const optionElement = document.getElementById(`option-${index + 1}`);
-//       if (optionElement) optionElement.innerText = option;
-//     })
-//   }
-
-//   console.log(answerOptions);
+  }
 }
 
 
