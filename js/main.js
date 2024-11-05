@@ -52,7 +52,17 @@ let questOpen = [
 
 let currentArray = questSing ; 
 let currentIndex = 0 ;
+let arrayIndex = 0;
+const questionArrays = [questSing, questMult, questOpen];
 
+function getNextArray() {
+  arrayIndex++; 
+  if (arrayIndex < questionArrays.length) { 
+    currentArray = questionArrays[arrayIndex]; 
+    currentIndex = 0; 
+    return true; 
+  } 
+    return false; }
 
 function loadQuestion() {
   // fetching template for each question
@@ -158,9 +168,12 @@ function storeInput () {
 }
   
 function showNextQuestion() {
-  currentIndex++;
+  
   console.log('next question called')
-  if(currentIndex < currentArray.length)  {
+    if(currentIndex < currentArray.length)  {
+      currentIndex++;
+      loadQuestion();
+  }else if (getNextArray()){
     loadQuestion();
   }
   else {
