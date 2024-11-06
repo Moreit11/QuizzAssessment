@@ -183,8 +183,19 @@ function scoreInput(){
       totalQuestions++;
 
       const storedAnswer = JSON.parse(localStorage.getItem(`${qTypeIdx}-question-${qIdx}`))
+      // Check the answer based on question type
+      if (Array.isArray(question.answer)) {
+        // For multiple-choice (array answers), check if all elements match
+        if (Array.isArray(storedAnswer) && arraysEqual(storedAnswer, question.answer)) {
+          score++;
+        }
+      } else {
+        // For single-choice or open questions (string answers)
+        if (storedAnswer === question.answer) {
+          score++;
+        }
+      }
 
-      
     })
   })
 }
@@ -219,9 +230,7 @@ function showNextQuestion() {
       scoreInput()
 
     }
-  }
-  else {
-    console.log('something went wrong')
-
+  }else {
+    console.log('Next Question not working')
   }
 }
