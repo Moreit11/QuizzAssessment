@@ -57,7 +57,6 @@ let qType = qTypeArray[qTypeIndex];
 
 function loadQuestion() {
   // fetching template for each question
-  console.log(qTypeIndex)
   let tempPath 
   
   if (qType === questSing) {
@@ -90,9 +89,13 @@ function loadQuestion() {
 function displayQuestionContent(currentItem) {
   // Display the question text
   document.getElementById('question-label').innerText = currentItem.question;
-  for (let i = 0; i < currentItem.options.length; i++) {
-    document.getElementById('option-' + i).value = currentItem.options[i];
-    document.getElementById('option-text-' + i).textContent = currentItem.options[i];
+  if (qType === questSing || qType === questMult){ 
+    for (let i = 0; i < currentItem.options.length; i++) {
+      document.getElementById('option-' + i).value = currentItem.options[i];
+      document.getElementById('option-text-' + i).textContent = currentItem.options[i];
+    }
+  }else {
+    console.log('open question')
   }
 }
 
@@ -116,22 +119,24 @@ function validateInput() {
 
     let selectedOptions = document.querySelectorAll('input[name="option"]:checked');
     if (selectedOptions.length > 0){
-      console.log('Multiple coice option has been validated')
+
       
     } else {
-      console.log('Multiple choice validation failed')
+      console.log('Multiple Choice Validation Failed')
       return false
     }
   } else if (qType === questOpen) {
     // For open questions
-    const answerInput = document.querySelector('input[name="open-answer"]').value.trim();
+    let answerInput = document.querySelector('input[name="open-answer"]').value.trim();
     if(answerInput.length > 0) { 
 
     } else if (answerInput.length <= 0) {
-      return false
+      console.log('single Choice Validation Failed')
+      return false;
+      
     }
   } else {
-
+    console.log('single Choice Validation Failed')
     return false;
   }
 
@@ -155,7 +160,9 @@ function storeInput () {
     let userInput = Array.from(selectedOptions).map(option => option.value); // Convert NodeList to array of values 
     localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); // Stringify the array
   } else if (qType === questOpen) {
-    
+    let userInput = document.querySelector('input[name="open-answer"]').value; 
+    console.log('user imput stored : ' + userInput)
+    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); // Stringify the array
   } else {
     
   }
@@ -170,11 +177,17 @@ function showNextQuestion() {
       loadQuestion();
   }else if ( qIndex === qType.length - 1 ){ // runs if the current array is completed
     
-    console.log('Move to next question type');
-    qTypeIndex++;
-    qIndex = 0;
-    qType = qTypeArray[qTypeIndex];
-    loadQuestion();
+    if( qTypeIndex < qTypeArray.length - 1) { // runs if there is arrays left to iterate through
+      console.log('Move to next question type');
+      qTypeIndex++;
+      qIndex = 0;
+      qType = qTypeArray[qTypeIndex];
+      loadQuestion();
+
+    }else if(qTypeIndex === qTypeArray.length -1){ // runns if all qType arrarys are completed
+      console.log('quizz completed')
+    }
+   
   }
   else {
     console.log('quizz has been completed')
