@@ -95,7 +95,7 @@ function displayQuestionContent(currentItem) {
       document.getElementById('option-text-' + i).textContent = currentItem.options[i];
     }
   }else {
-    console.log('open question')
+    
   }
 }
 
@@ -152,16 +152,17 @@ function storeInput () {
   if (qType === questSing) {
     // For single-choice questions
     let userInput = document.querySelector('input[name="option"]:checked').value;
-    localStorage.setItem(`${qTypeIndex}question-${qIndex}`, userInput);
+    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, userInput);
   
 
   }else if (qType === questMult) {
     let selectedOptions = document.querySelectorAll('input[name="option"]:checked'); 
     let userInput = Array.from(selectedOptions).map(option => option.value); // Convert NodeList to array of values 
     localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); // Stringify the array
+
   } else if (qType === questOpen) {
     let userInput = document.querySelector('input[name="open-answer"]').value; 
-    console.log('user imput stored : ' + userInput)
+
     localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); // Stringify the array
   } else {
     
@@ -169,28 +170,58 @@ function storeInput () {
   showNextQuestion();
 }
   
+function updateButton(){
+  document.getElementById('btn-nxt').innerText = 'submit';
+  console.log('button has been updated to submit')
+}
+
+function scoreInput(){
+  let score = 0;
+  let totalQuestions = 0;
+  qTypeArray.forEach((questionSet, qTypeIdx) =>{
+    questionSet.forEach((question, qIdx) => {
+      totalQuestions++;
+
+      const storedAnswer = JSON.parse(localStorage.getItem(`${qTypeIdx}-question-${qIdx}`))
+
+      
+    })
+  })
+}
+
+
 function showNextQuestion() {
   
-  
-    if(qIndex < qType.length -1 )  { // check where we are in the current array
+  if(qIndex < qType.length -1 && qTypeIndex != qTypeArray.length - 1)  { // load next question in current array if we are NOT in the last array
       qIndex++;
       loadQuestion();
-  }else if ( qIndex === qType.length - 1 ){ // runs if the current array is completed
-    
-    if( qTypeIndex < qTypeArray.length - 1) { // runs if there is arrays left to iterate through
-      console.log('Move to next question type');
+      // console.log('we are NOT in the last array')
+  }else if ( qIndex === qType.length - 1 && qTypeIndex != qTypeArray.length - 1 ){ // loads the next question type if we are on the last question in the current type
+    console.log('Move to next question type');
       qTypeIndex++;
       qIndex = 0;
       qType = qTypeArray[qTypeIndex];
       loadQuestion();
+  }else if(qIndex <= qType.length - 1 && qTypeIndex === qTypeArray.length - 1){ //run if we are in the last array
+    console.log('we are in the last array')
+    if(qIndex < qType.length -2 ){ //runs if the we are not at the last question in the array
+      console.log('current index: ' + qIndex +' Array length: ' + qType.length)
+      qIndex++;
+      loadQuestion();
+      
+    }else if(qIndex === qType.length - 2){ //runns on second last question in current array
+      qIndex++;
+      loadQuestion();
+      updateButton();
+      console.log('updating button')
+    }else if(qIndex === qType.length -1){ //runns on last question in last array
+      console.log('last question in last array')
+      scoreInput()
 
-    }else if(qTypeIndex === qTypeArray.length -1){ // runns if all qType arrarys are completed
-      console.log('quizz completed')
     }
-   
   }
   else {
-    console.log('quizz has been completed')
+    console.log('something went wrong')
 
   }
 }
