@@ -4,16 +4,16 @@ let questSing = [
     answer: 'Tokyo',
     options: ['Tokyo', 'Seoul', 'Beijing', 'Bangkok']
   },
-  { 
-    question: "Q2: Which continent is the Sahara Desert located on?", 
-    answer: 'Africa',
-    options: ['Africa', 'Asia', 'Australia', 'South America']
-  },
-  { 
-    question: "Q3: What is the tallest mountain in the world?", 
-    answer: 'Mount Everest',
-    options: ['Mount Everest', 'K2', 'Kilimanjaro', 'Mont Blanc']
-  }
+  // { 
+  //   question: "Q2: Which continent is the Sahara Desert located on?", 
+  //   answer: 'Africa',
+  //   options: ['Africa', 'Asia', 'Australia', 'South America']
+  // },
+  // { 
+  //   question: "Q3: What is the tallest mountain in the world?", 
+  //   answer: 'Mount Everest',
+  //   options: ['Mount Everest', 'K2', 'Kilimanjaro', 'Mont Blanc']
+  // }
 ];
 
 let questMult = [
@@ -22,16 +22,16 @@ let questMult = [
     answer: ['England', 'Scotland', 'Wales'],
     options: ['England', 'Scotland', 'Wales', 'Ireland']
   },
-  { 
-    question: "Q2: Which of these rivers flow through Egypt?", 
-    answer: ['Nile'],
-    options: ['Nile', 'Amazon', 'Yangtze', 'Mississippi']
-  },
-  { 
-    question: "Q3: Which countries border France?", 
-    answer: ['Germany', 'Spain', 'Italy'],
-    options: ['Germany', 'Spain', 'Italy', 'Brazil']
-  }
+  // { 
+  //   question: "Q2: Which of these rivers flow through Egypt?", 
+  //   answer: ['Nile'],
+  //   options: ['Nile', 'Amazon', 'Yangtze', 'Mississippi']
+  // },
+  // { 
+  //   question: "Q3: Which countries border France?", 
+  //   answer: ['Germany', 'Spain', 'Italy'],
+  //   options: ['Germany', 'Spain', 'Italy', 'Brazil']
+  // }
 ];
 
 let questOpen = [
@@ -39,14 +39,14 @@ let questOpen = [
     question: "Q1: What is the longest river in the world?", 
     answer: 'Nile'
   },
-  { 
-    question: "Q2: How many continents are there on Earth?", 
-    answer: 'Seven'
-  },
-  { 
-    question: "Q3: What is the highest mountain in Africa?", 
-    answer: 'Kilimanjaro'
-  }
+//   { 
+//     question: "Q2: How many continents are there on Earth?", 
+//     answer: 'Seven'
+//   },
+//   { 
+//     question: "Q3: What is the highest mountain in Africa?", 
+//     answer: 'Kilimanjaro'
+//   }
 ];
 
 
@@ -145,34 +145,35 @@ storeInput();
 
 
 
-function storeInput () {
-  //create and object in Java script with the input passed from the form
-
+function storeInput() {
+  let userInput;
 
   if (qType === questSing) {
-    // For single-choice questions
-    let userInput = document.querySelector('input[name="option"]:checked').value;
-    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, userInput);
-  
-
-  }else if (qType === questMult) {
-    let selectedOptions = document.querySelectorAll('input[name="option"]:checked'); 
-    let userInput = Array.from(selectedOptions).map(option => option.value); // Convert NodeList to array of values 
-    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); // Stringify the array
-
-  } else if (qType === questOpen) {
-    let userInput = document.querySelector('input[name="open-answer"]').value; 
-
-    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); // Stringify the array
-  } else {
+    userInput = document.querySelector('input[name="option"]:checked').value;
+    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput));
     
+  } else if (qType === questMult) {
+    let selectedOptions = document.querySelectorAll('input[name="option"]:checked');
+    userInput = Array.from(selectedOptions).map(option => option.value); 
+    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput)); 
+    
+  } else if (qType === questOpen) {
+    userInput = document.querySelector('input[name="open-answer"]').value;
+    localStorage.setItem(`${qTypeIndex}-question-${qIndex}`, JSON.stringify(userInput));
   }
+  
   showNextQuestion();
 }
+ 
   
 function updateButton(){
   document.getElementById('btn-nxt').innerText = 'submit';
   console.log('button has been updated to submit')
+}
+
+function arraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) return false;
+  return arr1.every((element, index) => element === arr2[index]);
 }
 
 function scoreInput(){
@@ -198,6 +199,7 @@ function scoreInput(){
 
     })
   })
+  console.log(score);
 }
 
 
