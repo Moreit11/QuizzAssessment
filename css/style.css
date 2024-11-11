@@ -1,9 +1,13 @@
 body{
     color: var(--brand-black);
+    background: url(/media/brown\ map.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .container{
-    background-color: lightcoral;
+    background-color: var(--brand-white);
     padding: 1em;
     justify-content: center;
     align-items: center;

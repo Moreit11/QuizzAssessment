@@ -4,16 +4,16 @@ let questSing = [
     answer: 'Tokyo',
     options: ['Tokyo', 'Seoul', 'Beijing', 'Bangkok']
   },
-  // { 
-  //   question: "Q2: Which continent is the Sahara Desert located on?", 
-  //   answer: 'Africa',
-  //   options: ['Africa', 'Asia', 'Australia', 'South America']
-  // },
-  // { 
-  //   question: "Q3: What is the tallest mountain in the world?", 
-  //   answer: 'Mount Everest',
-  //   options: ['Mount Everest', 'K2', 'Kilimanjaro', 'Mont Blanc']
-  // }
+  { 
+    question: "Q2: Which continent is the Sahara Desert located on?", 
+    answer: 'Africa',
+    options: ['Africa', 'Asia', 'Australia', 'South America']
+  },
+  { 
+    question: "Q3: What is the tallest mountain in the world?", 
+    answer: 'Mount Everest',
+    options: ['Mount Everest', 'K2', 'Kilimanjaro', 'Mont Blanc']
+  }
 ];
 
 let questMult = [
@@ -22,16 +22,16 @@ let questMult = [
     answer: ['England', 'Scotland', 'Wales'],
     options: ['England', 'Scotland', 'Wales', 'Ireland']
   },
-  // { 
-  //   question: "Q2: Which of these rivers flow through Egypt?", 
-  //   answer: ['Nile'],
-  //   options: ['Nile', 'Amazon', 'Yangtze', 'Mississippi']
-  // },
-  // { 
-  //   question: "Q3: Which countries border France?", 
-  //   answer: ['Germany', 'Spain', 'Italy'],
-  //   options: ['Germany', 'Spain', 'Italy', 'Brazil']
-  // }
+  { 
+    question: "Q2: Which of these rivers flow through Egypt?", 
+    answer: ['Nile'],
+    options: ['Nile', 'Amazon', 'Yangtze', 'Mississippi']
+  },
+  { 
+    question: "Q3: Which countries border France?", 
+    answer: ['Germany', 'Spain', 'Italy'],
+    options: ['Germany', 'Spain', 'Italy', 'Brazil']
+  }
 ];
 
 let questOpen = [
@@ -39,14 +39,14 @@ let questOpen = [
     question: "Q1: What is the longest river in the world?", 
     answer: 'Nile'
   },
-//   { 
-//     question: "Q2: How many continents are there on Earth?", 
-//     answer: 'Seven'
-//   },
-//   { 
-//     question: "Q3: What is the highest mountain in Africa?", 
-//     answer: 'Kilimanjaro'
-//   }
+  { 
+    question: "Q2: How many continents are there on Earth?", 
+    answer: 'Seven'
+  },
+  { 
+    question: "Q3: What is the highest mountain in Africa?", 
+    answer: 'Kilimanjaro'
+  }
 ];
 
 
@@ -199,8 +199,73 @@ function scoreInput(){
 
     })
   })
-  console.log(score);
+  
+  storeResults(totalQuestions, score)
 }
+
+function storeResults(totalQuestions, score) {
+
+    // Store the data in localStorage
+    localStorage.setItem('totalQuestions', totalQuestions);
+    localStorage.setItem('score', score);
+  
+    // Navigate to the new page
+    window.location.href = '/results.html';
+}
+
+function displayResults() {
+  console.log('display results function loaded');
+
+  // Retrieve data from localStorage
+  const totalQuestions = localStorage.getItem('totalQuestions');
+  const score = localStorage.getItem('score');
+
+  console.log('Retrieved from localStorage - questions: ' + totalQuestions + ', Score: ' + score);
+
+  if (totalQuestions && score) {
+    // Calculate the grade
+    const grade = (score / totalQuestions).toFixed(2);
+
+    // Update the HTML with the score and grade
+    const scoreSpan = document.getElementById('score')
+    const maxScoreSpan = document.getElementById('max-score')
+    const feedbackSpan = document.getElementById('feedback')
+    scoreSpan.innerText = score
+    maxScoreSpan.innerText = totalQuestions
+    if (grade >= .6) {
+
+      feedbackSpan.innerText = 'You have passed the quizz with ' + grade *100 + '%'
+    } else {
+      feedbackSpan.innerText = 'You have not passed the quizz, because you only reached ' + grade*100 +'%'
+
+    }
+  } else {
+    console.error('Data not found in localStorage.');
+  }
+}
+
+// Ensure this script runs once the page is fully loaded
+
+
+// function displayResults () { // called on load of the body on results.html
+//  console.log('display results function loaded')
+// window.onload = () => {
+
+//   const totalQuestions = localStorage.getItem('totalQuestions');
+//   const score = localStorage.getItem('score');
+
+//   console.log( 'questions: ' + totalQuestions +' Score: ' + score)
+
+//   if (totalQuestions && score) { 
+//     const grade = score / totalQuestions;
+//     document.getElementById('score').innerText = score;
+//     console.log(`Score: ${score}, Total Questions: ${totalQuestions}, Grade: ${grade.toFixed(2)}`);
+//   } else {
+//     console.error('Data not found in localStorage.');
+//   }
+// };
+
+// }
 
 
 function showNextQuestion() {

@@ -6,14 +6,17 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/utilities.css">
     <link rel="stylesheet" href="/css/cBoxquizz.css">
-    <script src="/js/main.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    
 </head>
-<body>
+<body onload="displayResults()">
 
     <section>
         <div id="container">
-
+            <h1>Your have reached <span id="score"></span> out of <span id="max-score"></span> points</h1>
+            <h2 id="feedback"></h2>
         </div>
     </section>
+    <script src="/js/main.js" defer></script>
 </body>
 </html>
