@@ -99,9 +99,6 @@ function displayQuestionContent(currentItem) {
   }
 }
 
-
-
-
 function validateInput() {
 
   if (qType === questSing) {
@@ -143,8 +140,6 @@ function validateInput() {
 storeInput();
 }
 
-
-
 function storeInput() {
   let userInput;
 
@@ -164,7 +159,6 @@ function storeInput() {
   
   showNextQuestion();
 }
- 
   
 function updateButton(){
   document.getElementById('btn-nxt').innerText = 'submit';
@@ -243,30 +237,6 @@ function displayResults() {
     console.error('Data not found in localStorage.');
   }
 }
-
-// Ensure this script runs once the page is fully loaded
-
-
-// function displayResults () { // called on load of the body on results.html
-//  console.log('display results function loaded')
-// window.onload = () => {
-
-//   const totalQuestions = localStorage.getItem('totalQuestions');
-//   const score = localStorage.getItem('score');
-
-//   console.log( 'questions: ' + totalQuestions +' Score: ' + score)
-
-//   if (totalQuestions && score) { 
-//     const grade = score / totalQuestions;
-//     document.getElementById('score').innerText = score;
-//     console.log(`Score: ${score}, Total Questions: ${totalQuestions}, Grade: ${grade.toFixed(2)}`);
-//   } else {
-//     console.error('Data not found in localStorage.');
-//   }
-// };
-
-// }
-
 
 function showNextQuestion() {
   
